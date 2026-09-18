@@ -13,10 +13,9 @@ public class SinhvienController {
     private final List<Sinhvien> userList = new ArrayList<>();
 
     public SinhvienController() {
-        // Đúng 5 tham số tương ứng model Sinhvien: id, name, address, gender, status
-        userList.add(new Sinhvien(1, "Ngo Anh Duc", "Ha Noi City", "Nam", "Đang học"));
-        userList.add(new Sinhvien(2, "Nguyen Khanh Tung", "Ho Chi Minh City", "Nữ", "Đi học"));
-        userList.add(new Sinhvien(3, "Nguyen Ngoc Nam Khanh", "Da Nang City", "Nam", "Đi học"));
+        userList.add(new Sinhvien(1, "Ngo Anh Duc", "Ha Noi City", "Nam", "Dang hoc"));
+        userList.add(new Sinhvien(2, "Nguyen Khanh Tung", "Ho Chi Minh City", "Nu", "Di hoc"));
+        userList.add(new Sinhvien(3, "Nguyen Ngoc Nam Khanh", "Da Nang City", "Nam", "Di hoc"));
     }
 
     @GetMapping("/list-sinhvien")
