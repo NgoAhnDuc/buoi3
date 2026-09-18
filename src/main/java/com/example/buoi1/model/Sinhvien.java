@@ -18,6 +18,7 @@ public class Sinhvien {
 
     public String address;
 
-    public String genderStatus;
+    public String gender;
 
+    public String status;
 }

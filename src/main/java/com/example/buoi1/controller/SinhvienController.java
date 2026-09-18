@@ -13,9 +13,10 @@ public class SinhvienController {
     private final List<Sinhvien> userList = new ArrayList<>();
 
     public SinhvienController() {
-        userList.add(new Sinhvien(1, "Ngo Anh Duc", "Ha Noi", "Male"));
-        userList.add(new Sinhvien(2, "Nguyen Khanh Tung", "Ho Chi Minh City", "Famale"));
-        userList.add(new Sinhvien(3, "Nguyen Ngoc Nam Khanh", "Da Nang City", "Male"));
+        // Đúng 5 tham số tương ứng model Sinhvien: id, name, address, gender, status
+        userList.add(new Sinhvien(1, "Ngo Anh Duc", "Ha Noi City", "Nam", "Đang học"));
+        userList.add(new Sinhvien(2, "Nguyen Khanh Tung", "Ho Chi Minh City", "Nữ", "Đi học"));
+        userList.add(new Sinhvien(3, "Nguyen Ngoc Nam Khanh", "Da Nang City", "Nam", "Đi học"));
     }
 
     @GetMapping("/list-sinhvien")
@@ -34,15 +35,21 @@ public class SinhvienController {
         for (Sinhvien existingSinhvien : userList) {
             if (existingSinhvien.getId() == id) {
                 existingSinhvien.setName(sinhvien.getName());
-                return "Update user success (khong can sua lai): " + sinhvien.getName();
+                existingSinhvien.setAddress(sinhvien.getAddress());
+                existingSinhvien.setGender(sinhvien.getGender());
+                existingSinhvien.setStatus(sinhvien.getStatus());
+                return "Update user success: " + sinhvien.getName();
             }
         }
-        return "User not founddddd!!!!!!!";
+        return "User not found with id: " + id;
     }
 
     @DeleteMapping("/delete-sinhvien/{id}")
     public String deleteUser(@PathVariable int id) {
-        userList.removeIf(sinhvien -> sinhvien.getId() == id);
-        return "Delete user success (khong can sua lai)";
+        boolean removed = userList.removeIf(sinhvien -> sinhvien.getId() == id);
+        if (removed) {
+            return "Delete user success with id: " + id;
+        }
+        return "User not found with id: " + id;
     }
 }
