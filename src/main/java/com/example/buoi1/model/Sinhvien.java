@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Users {
+public class Sinhvien {
 
     public Integer id;
 
