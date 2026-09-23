@@ -3,7 +3,6 @@ package com.example.buoi1.controller;
 import com.example.buoi1.model.Drink;
 import com.example.buoi1.repo.DrinkRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,17 +15,20 @@ public class DrinkController {
     private final DrinkRepo drinkRepo;
 
     @GetMapping
-    public List<Drink> getAll() { return drinkRepo.findAll(); }
+    public List<Drink> getAll() {
+        return drinkRepo.findAll();
+    }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Drink create(@RequestBody Drink drink) { return drinkRepo.save(drink); }
+    public String addNewDrink(@RequestBody Drink drink) {
+        drinkRepo.save(drink);
+        return "Them thanh cong";
+    }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        if (!drinkRepo.existsById(id)) return ResponseEntity.notFound().build();
+    public String deleteDrink(@RequestParam("id") Integer id) {
         drinkRepo.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return "Xoa thanh cong";
     }
 
     @PutMapping("/{id}")
