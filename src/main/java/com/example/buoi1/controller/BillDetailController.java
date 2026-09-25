@@ -16,7 +16,7 @@ import java.util.List;
 public class BillDetailController {
     private final BillDetailRepo billDetailRepo;
 
-    @GetMapping("/billdetails")
+    @GetMapping
     public List<BillDetail> getAll() {
         return billDetailRepo.findAll();
     }

@@ -3,7 +3,6 @@ package com.example.buoi1.controller;
 import com.example.buoi1.model.User;
 import com.example.buoi1.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,7 @@ import java.util.List;
 public class UserController {
     private final UserRepo userRepo;
 
-    @GetMapping("/users")
+    @GetMapping
     public List<User> getAll() {
         return userRepo.findAll();
     }

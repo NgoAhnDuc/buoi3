@@ -15,7 +15,7 @@ import java.util.List;
 public class CategoryController {
     private final CategoryRepo categoryRepo;
 
-    @GetMapping("/categories")
+    @GetMapping
     public List<Category> getAll() {
         return categoryRepo.findAll();
     }

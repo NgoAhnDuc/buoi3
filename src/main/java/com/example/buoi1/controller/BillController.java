@@ -16,12 +16,12 @@ import java.util.List;
 public class BillController {
     private final BillRepo billRepo;
 
-    @GetMapping("/bills")
+    @GetMapping
     public List<Bill> getAll() {
         return billRepo.findAll();
     }
 
-    @PostMapping("/bills")
+    @PostMapping
     public String addNewBill(@RequestBody Bill bill) {
         billRepo.save(bill);
         return "Them thanh cong";
@@ -33,7 +33,7 @@ public class BillController {
         return "Xoa thanh cong";
     }
 
-    @PutMapping("/{id")
+    @PutMapping("/{id}  ")
     public ResponseEntity<Bill> update(@PathVariable Integer id, @RequestBody Bill b) {
         return billRepo.findById(id).map( item -> {
             item.setCode(b.getCode());
