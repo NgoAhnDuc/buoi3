@@ -1,54 +1,43 @@
 package com.example.buoi1.controller;
 
 import com.example.buoi1.model.Sinhvien;
+import com.example.buoi1.repo.SinhvienRepo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/sinhvien")
+@RequiredArgsConstructor
 public class SinhvienController {
+    private final SinhvienRepo sinhvienRepo;
 
-    private final List<Sinhvien> userList = new ArrayList<>();
-
-    public SinhvienController() {
-        userList.add(new Sinhvien(1, "Ngo Anh Duc", "Ha Noi City", "Nam", "Dang hoc"));
-        userList.add(new Sinhvien(2, "Nguyen Khanh Tung", "Ho Chi Minh City", "Nu", "Di hoc"));
-        userList.add(new Sinhvien(3, "Nguyen Ngoc Nam Khanh", "Da Nang City", "Nam", "Di hoc"));
+    @GetMapping
+    public List<Sinhvien> getAll() {
+        return sinhvienRepo.findAll();
     }
 
-    @GetMapping("/list-sinhvien")
-    public List<Sinhvien> listUsers() {
-        return userList;
+    @PostMapping
+    public String addNewSinhvien(@RequestBody Sinhvien sinhvien) {
+        sinhvienRepo.save(sinhvien);
+        return "Them thanh cong";
     }
 
-    @PostMapping("/add-sinhvien")
-    public String addUser(@RequestBody Sinhvien sinhvien) {
-        userList.add(sinhvien);
-        return "Add user success: " + sinhvien.getName();
+    @DeleteMapping("/{id}")
+    public String deleteSinhvien(@RequestParam("id") Integer id) {
+        sinhvienRepo.deleteById(id);
+        return "Xoa thanh cong";
     }
 
-    @PutMapping("/update-sinhvien/{id}")
-    public String updateUser(@PathVariable int id, @RequestBody Sinhvien sinhvien) {
-        for (Sinhvien existingSinhvien : userList) {
-            if (existingSinhvien.getId() == id) {
-                existingSinhvien.setName(sinhvien.getName());
-                existingSinhvien.setAddress(sinhvien.getAddress());
-                existingSinhvien.setGender(sinhvien.getGender());
-                existingSinhvien.setStatus(sinhvien.getStatus());
-                return "Update user success: " + sinhvien.getName();
-            }
-        }
-        return "User not found with id: " + id;
+    @PutMapping("/{id}")
+    public ResponseEntity<Sinhvien> update(@PathVariable Integer id, @RequestBody Sinhvien s) {
+        return sinhvienRepo.findById(id).map(item -> {
+            item.setName(s.getName());
+            item.setAddress(s.getAddress());
+            return ResponseEntity.ok(sinhvienRepo.save(item));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/delete-sinhvien/{id}")
-    public String deleteUser(@PathVariable int id) {
-        boolean removed = userList.removeIf(sinhvien -> sinhvien.getId() == id);
-        if (removed) {
-            return "Delete user success with id: " + id;
-        }
-        return "User not found with id: " + id;
-    }
 }
